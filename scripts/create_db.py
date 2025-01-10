@@ -2,7 +2,7 @@ from sqlalchemy import create_engine
 import pandas as pd
 
 # Load data
-data = pd.read_csv("retail_sales_dataset.csv")
+data = pd.read_csv("../retail_sales_dataset.csv")
 
 # Connect to the sqlite base
 engine = create_engine("sqlite:///RetailSalesDB.db")
@@ -22,3 +22,7 @@ with engine.connect() as connection:
         TotalAmount DECIMAL(10, 2)
     );
     """)
+
+# Insert data
+data.to_sql("RetailSales", con=engine, if_exists='append', index=False)
+print("Data insert with success !")
